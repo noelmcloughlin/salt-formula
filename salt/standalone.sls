@@ -1,13 +1,13 @@
 {% from "salt/map.jinja" import salt_settings with context %}
 
 salt-minion:
-{% if salt_settings.install_packages %}
+  {% if salt_settings.install_packages %}
   pkg.installed:
     - name: {{ salt_settings.salt_minion }}
-  {%- if salt_settings.version is defined %}
+    {%- if salt_settings.version is defined %}
     - version: {{ salt_settings.version }}
-  {%- endif %}
-{% endif %}
+    {%- endif %}
+  {% endif %}
   file.recurse:
     - name: {{ salt_settings.config_path }}/minion.d
     - template: jinja
@@ -15,19 +15,20 @@ salt-minion:
     - clean: {{ salt_settings.clean_config_d_dir }}
     - exclude_pat: _*
     - context:
+  {%- if salt_settings.minion.master_type in ('disable', False) %}
         standalone: True
-{%- if salt_settings.minion.master_type is defined and salt_settings.minion.master_type == 'disable' %}
   service.running:
     - enable: True
-{%- else %}
+  {%- else %}
+        standalone: False
   service.dead:
     - enable: False
-{%- endif %}
+  {%- endif %}
     - name: {{ salt_settings.minion_service }}
     - require:
-{% if salt_settings.install_packages %}
+  {% if salt_settings.install_packages %}
       - pkg: salt-minion
-{% endif %}
+  {% endif %}
       - file: salt-minion
 
 # clean up old _defaults.conf file if they have it around

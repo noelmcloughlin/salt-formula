@@ -28,6 +28,13 @@ salt:
 
   master:
     gitfs_provider: gitpython
+  minion:
+    master_type: True
+
+  ## init state helpers
+  pkgrepo: None          #via map jinja
+  ssh_roster: None       #via pillar data
+  extra_init_states: []  #via pillar data
 
   gitfs:
     dulwich:
@@ -55,6 +62,7 @@ salt:
       maps: salt://salt/files/cloud.maps.d
 
 salt_formulas:
+  list: {}     #via pillar data
   checkout_orig_branch: False
   git_opts:
     default:

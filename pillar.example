@@ -230,6 +230,11 @@ salt:
         - test.ping
         - saltutil.find_job
 
+  # customize init.sls behaviour (run api and/or syndic too)
+  extra_init_states:
+    - api
+    - syndic
+
   # salt cloud config
   cloud:
     master: salt
