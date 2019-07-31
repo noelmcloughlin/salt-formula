@@ -3,15 +3,15 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 {% if salt_settings.install_packages and grains.os == 'MacOS' %}
-   {%- if salt_settings.salt_minion_pkg_source %}
+   {%- if salt_settings.salt_macpackage_source %}
        {# only download IF we know where to get the pkg from and what version to check the current install (if installed) against #}
        {# e.g. don't download unless it appears as though we're about to try and upgrade the minion #}
 download-salt-minion:
   file.managed:
     - name: '/tmp/salt.pkg'
-    - source: {{ salt_settings.salt_minion_pkg_source }}
-    {% if salt_settings.salt_minion_pkg_hash != '' %}
-    - source_hash: {{ salt_settings.salt_minion_pkg_hash }}
+    - source: {{ salt_settings.salt_macpackage_source }}
+    {% if salt_settings.salt_macpackage_hash %}
+    - source_hash: {{ salt_settings.salt_macpackage_hash }}
     {% else %}
     - skip_verify: True
     {% endif %}
@@ -36,7 +36,7 @@ salt-minion-brew-workaround:
 
 salt-minion:
 {% if salt_settings.install_packages %}
-  {%- if grains.os == 'MacOS' and salt_settings.salt_minion_pkg_source %}
+  {%- if grains.os == 'MacOS' and salt_settings.salt_macpackage_source %}
   macpackage.installed:
     - name: '/tmp/salt.pkg'
     - target: /
@@ -104,7 +104,7 @@ salt-minion:
   {%- endif %}
     - onchanges:
   {%- if salt_settings.install_packages %}
-    {%- if grains.os == 'MacOS' and salt_settings.salt_minion_pkg_source %}
+    {%- if grains.os == 'MacOS' and salt_settings.salt_macpackage_source %}
       - macpackage: salt-minion
     {%- elif grains.os == 'MacOS' %}
       - cmd: salt-minion-brew-workaround
@@ -130,7 +130,7 @@ restart-salt-minion:
         - pkg: at
     - onchanges:
   {%- if salt_settings.install_packages %}
-      {%- if grains.os == 'MacOS' and salt_settings.salt_minion_pkg_source %}
+      {%- if grains.os == 'MacOS' and salt_settings.salt_macpackage_source %}
       - macpackage: salt-minion
       {%- elif grains.os == 'MacOS' %}
       - cmd: salt-minion-brew-workaround
@@ -163,7 +163,7 @@ remove-old-minion-conf-file:
   file.absent:
     - name: {{ salt_settings.config_path }}/minion.d/_defaults.conf
 
-  {% if salt_settings.install_packages and grains.os == 'MacOS' and salt_settings.salt_minion_pkg_source %}
+  {% if salt_settings.install_packages and grains.os == 'MacOS' and salt_settings.salt_macpackage_source %}
 remove-macpackage-salt:
   cmd.run:
     - name: 'rm -f /tmp/salt.pkg'
