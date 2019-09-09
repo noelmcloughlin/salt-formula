@@ -28,6 +28,9 @@ salt:
   salt_api: salt-api
   salt_ssh: salt-ssh
 
+  pkgrepo: None          #see osfamilymap
+  ssh_roster: None       #see pillar data
+
   python_git: python-git
   python_dulwich: python-dulwich
 
@@ -35,11 +38,6 @@ salt:
     gitfs_provider: gitpython
   minion:
     master_type: True
-
-  ## init state helpers
-  pkgrepo: None          #via map jinja
-  ssh_roster: None       #via pillar data
-  extra_init_states: []  #via pillar data
 
   gitfs:
     dulwich:

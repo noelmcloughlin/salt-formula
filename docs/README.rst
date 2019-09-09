@@ -43,7 +43,7 @@ Available states
 ----------------
 
 .. contents::
-   :local:
+    :local:
 
 ``salt``
 ^^^^^^^^
