@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 salt:
+  version: ''
+  rootuser: root
+  rootgroup: root
   install_packages: True
   use_pip: False
   clean_config_d_dir: True
@@ -10,6 +13,8 @@ salt:
 
   minion_remove_config: False
   master_remove_config: False
+  minion_config_use_TOFS: False
+  master_config_use_TOFS: False
 
   minion_service: salt-minion
   master_service: salt-master
