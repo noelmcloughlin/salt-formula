@@ -1,11 +1,10 @@
-case os[:name]
-when 'centos'
-  version = '2019.2.0-1.el7'
-when 'fedora'
-  version = '2019.2.0-1.fc29'
-when 'debian', 'ubuntu'
-  version = '2019.2.0+ds-1'
-end
+version =
+  case platform[:family]
+  when 'redhat'
+    '2018.3.4-1.el7'
+  when 'debian'
+    '2018.3.4+ds-1'
+  end
 
 control 'salt packages' do
   title 'should be installed'
