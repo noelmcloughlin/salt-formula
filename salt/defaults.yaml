@@ -29,8 +29,8 @@ salt:
   salt_api: salt-api
   salt_ssh: salt-ssh
 
-  pkgrepo: None          #see osfamilymap
-  ssh_roster: None       #see pillar data
+  pkgrepo: None          # see osfamilymap
+  ssh_roster: None       # see pillar data
 
   python_git: python-git
   python_dulwich: python-dulwich
@@ -38,7 +38,7 @@ salt:
   master:
     gitfs_provider: gitpython
   minion:
-    master_type: True
+    master_type: true
 
   gitfs:
     dulwich:
@@ -66,7 +66,7 @@ salt:
       maps: salt://salt/files/cloud.maps.d
 
 salt_formulas:
-  list: {}     #via pillar data
+  list: {}     # via pillar data
   checkout_orig_branch: false
   git_opts:
     default:

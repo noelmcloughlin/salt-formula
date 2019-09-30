@@ -268,8 +268,8 @@ salt:
         - test.ping
         - saltutil.find_job
 
-  ##init.sls skips salt.api and salt.syndic states
-  ##unless their dicts exist with some key
+  # init.sls skips salt.api and salt.syndic states
+  # unless those dicts are populated with something
   api:
     somekey: somevalue
   syndic:
