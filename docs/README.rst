@@ -43,7 +43,14 @@ Available states
 ----------------
 
 .. contents::
-   :local:
+    :local:
+
+``salt``
+^^^^^^^^
+
+*Meta-state (This is a state that includes other states)*.
+
+This calls all runable states based on configured pillar data.
 
 ``salt.minion``
 ^^^^^^^^^^^^^^^
